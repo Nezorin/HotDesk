@@ -33,13 +33,13 @@ namespace HotDeskMVC.Controllers
             {
                 DeviceName = model.NewDeviceName
             };
-            await _deviceService.Create(device);
+            await _deviceService.CreateAsync(device);
             return RedirectToAction("Devices");
         }
         public async Task<IActionResult> DeleteDevice(int id)
         {
             var deviceToDelete = _deviceService.GetAll().FirstOrDefault(d => d.Id == id);
-            await _deviceService.Delete(deviceToDelete);
+            await _deviceService.DeleteAsync(deviceToDelete);
             return RedirectToAction("Devices");
         }
         /// <summary>

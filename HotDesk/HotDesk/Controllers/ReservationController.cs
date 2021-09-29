@@ -43,9 +43,9 @@ namespace HotDeskMVC.Controllers
             // Get all the devices that are contained in recieved model
             var devices = await _deviceService.Get(x => model.SelectedDevicesId.Contains(x.Id)).ToListAsync();
             //Get the user
-            var user = await _userService.GetByLogin(User.Identity.Name);
+            var user = await _userService.GetByLoginAsync(User.Identity.Name);
 
-            await _bookingService.AddReservation(user.Id, model.DeskId, devices, model.SelectedTime);
+            await _bookingService.AddReservationAsync(user.Id, model.DeskId, devices, model.SelectedTime);
 
             return RedirectToAction("Reservations");
         }

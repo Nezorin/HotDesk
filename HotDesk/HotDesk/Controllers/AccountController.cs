@@ -33,14 +33,14 @@ namespace HotDeskMVC.Controllers
             if (ModelState.IsValid)
             {
                 //Check if user already exists
-                User user = await _userService.GetByLogin(model.Login);
+                User user = await _userService.GetByLoginAsync(model.Login);
                 if (user == null)
                 {
                     user = new User { Login = model.Login, Password = model.Password };
                     Role userRole = await _roleService.GetAll().FirstOrDefaultAsync(r => r.RoleName == "user");
                     if (userRole != null)
                         user.Role = userRole;
-                    await _userService.Create(user);
+                    await _userService.CreateAsync(user);
                     await Authenticate(user);
 
                     return RedirectToAction("Index", "Desk");
@@ -95,7 +95,7 @@ namespace HotDeskMVC.Controllers
         [AcceptVerbs("Get", "Post")]
         public async Task<IActionResult> CheckLogin(string login)
         {
-            var user = await _userService.GetByLogin(login);
+            var user = await _userService.GetByLoginAsync(login);
             if (user is not null)
                 return Json(false);
             return Json(true);

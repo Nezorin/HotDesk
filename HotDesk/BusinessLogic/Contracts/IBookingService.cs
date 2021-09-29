@@ -9,7 +9,7 @@ namespace BusinessLogic.Contracts
     public interface IBookingService
     {
         public IQueryable<UserDesk> GetAll();
-        public Task AddReservation(int userId, int deskId, List<Device> devices, DateTime selectedTime);
+        public Task AddReservationAsync(int userId, int deskId, List<Device> devices, DateTime selectedTime);
         public List<DateTime> GetAllBookedTimesForDesk(int deskId);
         public List<DateTime> GetAllBookedTimesForUser(string userName);
         public List<DateTime> GetAllPossibleReservationTime(int deskId, string userName);

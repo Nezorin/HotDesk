@@ -15,14 +15,14 @@ namespace BusinessLogic.Implementations
         {
             _db = db;
         }
-        public async Task<int> Create(User user)
+        public async Task<int> CreateAsync(User user)
         {
             var result = await _db.Add(user);
             await _db.SaveChangesAsync();
 
             return result;
         }
-        public async Task<User> GetByLogin(string login)
+        public async Task<User> GetByLoginAsync(string login)
         {
             return await _db.GetAll<User>().FirstOrDefaultAsync(u => u.Login == login);
         }

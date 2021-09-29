@@ -17,7 +17,7 @@ namespace BusinessLogic.Implementations
             _db = db;
         }
 
-        public async Task<int> Create(Device device)
+        public async Task<int> CreateAsync(Device device)
         {
             var result = await _db.Add(device);
             await _db.SaveChangesAsync();
@@ -32,7 +32,7 @@ namespace BusinessLogic.Implementations
         {
             return _db.GetAll<Device>();
         }
-        public async Task Delete(Device device)
+        public async Task DeleteAsync(Device device)
         {
             await _db.Remove(device);
             await _db.SaveChangesAsync();

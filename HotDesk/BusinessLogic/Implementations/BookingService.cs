@@ -17,7 +17,7 @@ namespace BusinessLogic.Implementations
         {
             _db = db;
         }
-        public async Task AddReservation(int userId, int deskId, List<Device> devices, DateTime selectedTime)
+        public async Task AddReservationAsync(int userId, int deskId, List<Device> devices, DateTime selectedTime)
         {
             var reservation = new UserDesk()
             {

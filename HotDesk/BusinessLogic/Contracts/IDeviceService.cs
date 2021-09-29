@@ -8,9 +8,9 @@ namespace BusinessLogic.Contracts
 {
     public interface IDeviceService
     {
-        public Task<int> Create(Device device);
+        public Task<int> CreateAsync(Device device);
         public IQueryable<Device> GetAll();
         public IQueryable<Device> Get(Expression<Func<Device, bool>> selector);
-        public Task Delete(Device device);
+        public Task DeleteAsync(Device device);
     }
 }

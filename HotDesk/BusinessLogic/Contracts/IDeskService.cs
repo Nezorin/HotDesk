@@ -6,11 +6,11 @@ namespace BusinessLogic.Contracts
 {
     public interface IDeskService
     {
-        public Task<int> Create(Desk desk);
+        public Task<int> CreateAsync(Desk desk);
         public IQueryable<Desk> GetAll();
-        public Task Update(Desk desk);
-        public Task Delete(Desk desk);
-        public Task AddDeviceToDesk(int deskId, int deviceId);
-        public Task DeleteDeviceFromDesk(int deskId, int deviceId);
+        public Task UpdateAsync(Desk desk);
+        public Task DeleteAsync(Desk desk);
+        public Task AddDeviceToDeskAsync(int deskId, int deviceId);
+        public Task DeleteDeviceFromDeskAsync(int deskId, int deviceId);
     }
 }

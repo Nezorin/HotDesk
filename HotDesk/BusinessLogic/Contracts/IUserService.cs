@@ -6,8 +6,8 @@ namespace BusinessLogic.Contracts
 {
     public interface IUserService
     {
-        public Task<int> Create(User user);
-        public Task<User> GetByLogin(string login);
+        public Task<int> CreateAsync(User user);
+        public Task<User> GetByLoginAsync(string login);
         public IQueryable<User> GetAll();
     }
 }

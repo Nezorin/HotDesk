@@ -17,7 +17,7 @@ namespace BusinessLogic.Implementations
             _db = db;
             _deviceService = deviceService;
         }
-        public async Task<int> Create(Desk desk)
+        public async Task<int> CreateAsync(Desk desk)
         {
             var result = await _db.Add(desk);
             await _db.SaveChangesAsync();
@@ -29,31 +29,31 @@ namespace BusinessLogic.Implementations
             return _db.GetAll<Desk>().Include(d => d.Devices);
         }
 
-        public async Task Update(Desk desk)
+        public async Task UpdateAsync(Desk desk)
         {
             await _db.Update(desk);
             await _db.SaveChangesAsync();
         }
-        public async Task Delete(Desk desk)
+        public async Task DeleteAsync(Desk desk)
         {
             await _db.Remove(desk);
             await _db.SaveChangesAsync();
         }
 
-        public async Task AddDeviceToDesk(int deskId, int deviceId)
+        public async Task AddDeviceToDeskAsync(int deskId, int deviceId)
         {
             var desk = GetAll().FirstOrDefault(d => d.Id == deskId);
             var deviceToAdd = _deviceService.GetAll().FirstOrDefault(device => device.Id == deviceId);
             desk.Devices.Add(deviceToAdd);
-            await Update(desk);
+            await UpdateAsync(desk);
         }
 
-        public async Task DeleteDeviceFromDesk(int deskId, int deviceId)
+        public async Task DeleteDeviceFromDeskAsync(int deskId, int deviceId)
         {
             var desk = GetAll().FirstOrDefault(d => d.Id == deskId);
             var deviceToRemove = _deviceService.GetAll().FirstOrDefault(device => device.Id == deviceId);
             desk.Devices.Remove(deviceToRemove);
-            await Update(desk);
+            await UpdateAsync(desk);
         }
     }
 }

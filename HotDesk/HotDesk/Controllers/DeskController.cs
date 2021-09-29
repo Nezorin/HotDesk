@@ -43,7 +43,7 @@ namespace HotDeskMVC.Controllers
                 DeskName = deskModel.NewDeskName,
                 Devices = devices
             };
-            await _deskService.Create(desk);
+            await _deskService.CreateAsync(desk);
             return RedirectToAction("Index");
         }
         [Authorize(Roles = "admin")]
@@ -62,21 +62,21 @@ namespace HotDeskMVC.Controllers
         {
             var desk = _deskService.GetAll().FirstOrDefault(d => d.Id == model.Desk.Id);
             desk.DeskName = model.NewDeskName;
-            await _deskService.Update(desk);
+            await _deskService.UpdateAsync(desk);
             return RedirectToAction("EditDesk", new { id = model.Desk.Id });
         }
 
         [Authorize(Roles = "admin")]
         public async Task<IActionResult> DeleteDeviceFromDesk(int deskId, int deviceId)
         {
-            await _deskService.DeleteDeviceFromDesk(deskId, deviceId);
+            await _deskService.DeleteDeviceFromDeskAsync(deskId, deviceId);
             return RedirectToAction("EditDesk", new { id = deskId });
         }
         [Authorize(Roles = "admin")]
         [HttpPost]
         public async Task<IActionResult> AddDeviceToDesk(int deskId, int deviceId)
         {
-            await _deskService.AddDeviceToDesk(deskId, deviceId);
+            await _deskService.AddDeviceToDeskAsync(deskId, deviceId);
             return RedirectToAction("EditDesk", new { id = deskId });
         }
         [Authorize(Roles = "admin")]
@@ -96,7 +96,7 @@ namespace HotDeskMVC.Controllers
         public async Task<IActionResult> DeleteDesk(int id)
         {
             var deskToDelete = _deskService.GetAll().FirstOrDefault(d => d.Id == id);
-            await _deskService.Delete(deskToDelete);
+            await _deskService.DeleteAsync(deskToDelete);
             return RedirectToAction("Index");
         }
         /// <summary>
