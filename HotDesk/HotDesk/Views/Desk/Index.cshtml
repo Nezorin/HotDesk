@@ -1,0 +1,48 @@
+﻿@model DeskViewModel
+@{
+    ViewData["Title"] = "Home Page";
+}
+<table class="table table-bordered table-hover mt-5">
+    <thead class="thead-dark">
+        <tr>
+            <th>
+                DeskName
+            </th>
+            <th>
+                Devices
+            </th>
+            <th>
+                Options
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var desk in Model.Desks)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => desk.DeskName)
+                </td>
+                <td>
+                    @foreach (var device in desk.Devices)
+                    {
+                        @Html.Raw(device.DeviceName + " ");
+                    }
+                </td>
+                <td>
+                    @if (User.IsInRole("admin"))
+                    {
+                        <a asp-action="EditDesk" asp-route-id="@desk.Id">Edit</a>
+                        <a asp-action="DeleteDesk" asp-route-id="@desk.Id">Delete</a>
+                    }
+                    <a asp-action="BookDesk" asp-controller="Reservation" asp-route-deskId="@desk.Id" class="link-primary">Select</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@if (User.IsInRole("admin"))
+{
+    <a class="btn btn-primary mt-2" asp-action="AddDesk">Create New</a>
+}

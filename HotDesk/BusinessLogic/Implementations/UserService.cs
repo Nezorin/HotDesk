@@ -1,0 +1,35 @@
+﻿using BusinessLogic.Contracts;
+using DataAccessLayer;
+using DataAccessLayer.Entities;
+using Microsoft.EntityFrameworkCore;
+using System.Linq;
+using System.Threading.Tasks;
+
+namespace BusinessLogic.Implementations
+{
+    public class UserService : IUserService
+    {
+        private readonly IDbRepository _db;
+
+        public UserService(IDbRepository db)
+        {
+            _db = db;
+        }
+        public async Task<int> Create(User user)
+        {
+            var result = await _db.Add(user);
+            await _db.SaveChangesAsync();
+
+            return result;
+        }
+        public async Task<User> GetByLogin(string login)
+        {
+            return await _db.GetAll<User>().FirstOrDefaultAsync(u => u.Login == login);
+        }
+        public IQueryable<User> GetAll()
+        {
+            return _db.GetAll<User>().Include(u => u.Role);
+        }
+
+    }
+}

@@ -1,0 +1,70 @@
+﻿@model EditDeskViewModel
+@{
+    ViewData["Title"] = "Edit Desk";
+}
+
+<h1>Edit Desk</h1>
+
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="EditDeskName">
+            <div class="form-group">
+                <label asp-for="NewDeskName" class="control-label">Desk Name</label>
+                <input asp-for="NewDeskName" value="@Model.Desk.DeskName" class="form-control" />
+                <span asp-validation-for="NewDeskName" class="text-danger"></span>
+                <input asp-for="Desk.Id" value="@Model.Desk.Id" type="hidden" />
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Change Name" class="btn btn-primary" />
+            </div>
+        </form>
+        @if (Model.DevicesToAdd.Length != 0)
+        {
+            @using (Html.BeginForm("AddDeviceToDesk", "Desk", FormMethod.Post))
+            {
+                <select name="deviceId">
+                    @foreach (var device in Model.DevicesToAdd)
+                    {
+                        <option value="@device.Id">@device.DeviceName</option>
+                    }
+                </select>
+                <input name="deskId" value="@Model.Desk.Id" type="hidden" />
+                <p><input type="submit" value="Add" class="btn btn-primary mt-2" /></p>
+            }
+        }
+
+        <table class="table table-bordered table-hover">
+            <thead class="thead">
+                <tr>
+                    <th>
+                        Devices
+                    </th>
+                    <th>
+                        Options
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var device in Model.Desk.Devices)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => device.DeviceName)
+                        </td>
+                        <td>
+                            <a asp-action="DeleteDeviceFromDesk" asp-route-deskId="@Model.Desk.Id" asp-route-deviceId="@device.Id">Delete</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -1,0 +1,35 @@
+﻿@model AddDeskViewModel
+@{
+    ViewData["Title"] = "Add Desk";
+}
+
+<h1>Add Desk</h1>
+  
+<form asp-action="AddDesk">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="form-group">
+        <label asp-for="NewDeskName" class="control-label">Desk Name</label>
+        <input asp-for="NewDeskName" class="form-control" />
+        <span asp-validation-for="NewDeskName" class="text-danger"></span>
+    </div>
+    <ul class="list-group">
+        @foreach (var device in Model.Devices)
+        {
+            <li class="list-group-item border-0">
+                <input class="form-check-input" name="SelectedDevicesId" value="@device.Id" type="checkbox" />
+                @device.DeviceName
+            </li>
+        }
+    </ul>
+    <div class="form-group mt-2">
+        <input type="submit" value="Create" class="btn btn-primary" />
+    </div>
+</form>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -1,0 +1,48 @@
+﻿@model DeviceListViewModel
+@{
+    ViewData["Title"] = "Devices";
+}
+<h1>Devices</h1>
+<form asp-action="AddDevice" class="mt-2">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="form-group">
+        <label asp-for="NewDeviceName" class="control-label">Device Name</label>
+        <input asp-for="NewDeviceName" class="form-control" />
+        <span asp-validation-for="NewDeviceName" class="text-danger"></span>
+    </div>
+    <input type="submit" value="Create" class="btn btn-primary" />
+</form>
+<table class="table table-bordered table-hover mt-3">
+    <thead class="thead-dark">
+        <tr>
+            <th>
+                Id
+            </th>
+            <th>
+                Device name
+            </th>
+            <th>
+                Options
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var device in Model.Devices)
+        {
+            <tr>
+                <td>
+                    @Html.Raw(device.Id)
+                </td>
+                <td>
+                    @Html.Raw(device.DeviceName)
+                </td>
+                <td>
+                    <a asp-action="DeleteDevice" asp-route-id="@device.Id">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -1,0 +1,45 @@
+﻿@model ReservationsViewModel
+@{
+    ViewData["Title"] = "Reservation";
+}
+<h1>Last Reservations</h1>
+<table class="table table-bordered table-hover mt-3">
+    <thead class="thead-dark">
+        <tr>
+            <th>
+                DeskName
+            </th>
+            <th>
+                Date
+            </th>
+            <th>
+                User
+            </th>
+            <th>
+                Devices
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var reservation in Model.Reservations)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => reservation.Desk.DeskName)
+                </td>
+                <td>
+                    @Html.Raw(reservation.ReservationTime.ToString("d"))
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => reservation.User.Login)
+                </td>
+                <td>
+                    @foreach (var device in reservation.Devices)
+                    {
+                        @Html.Raw(device.DeviceName + " ");
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
